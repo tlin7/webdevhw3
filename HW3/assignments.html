@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<head>
+	<title>Hi I'm Thomas</title>
+	<script src="java_roll.js" language="javascript" type="text/javascript"></script>
+	<style>
+		body{
+			font-family: Arial;
+			margin: 0;
+			color: #66789B;
+			background-color: 	#B7D5E0;
+		}
+		#header {
+		   padding:10px;
+		   background-color: 	#585172;
+		   color: #E1EFF0;
+		   text-align: left;
+		}
+		#sidebar{
+			float:left;
+			width: 250px;
+			z-index: 1;
+			top: 200px;
+			margin:20px 0 0 10px;
+			background: #66799A;
+			color: #E1EFF0;
+			overflow-x: hidden;
+			padding: 8px 0;
+			text-align: center;
+		}
+		#footer {
+			padding:5px;
+		   position: fixed;
+		   left: 0;
+		   bottom: 0;
+		   width: 100%;
+		   background-color: 	#585172;
+		   color: #E1EFF0;
+		   text-align: center;
+		}
+		.main{
+			float:right;
+			margin:20px 20px 0 0;
+			width: 80%;
+			text-align: center;
+			background-color: #DFF0F2;
+		}
+		.homeworks td, .homeworks th {
+ 			border: 1px solid #ddd;
+  			padding: 8px;
+		}
+		.homeworks{
+			width: 100%;
+		}
+		a:visited{
+			color: #66789B;
+		}
+		#footer a:visited{
+			color: #E1EFF0;
+		}
+		img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class = "navigation">
+		<div id = "header">
+			<h1 style> Assignments </h1>
+		</div>
+		<div id = "sidebar">
+			<a href="home.html"><img src="mybutton/homebutton.gif" width="200" height="50" border="0" alt="one" id="one" /></a>
+			<a href="assignments.html"><img src="mybutton/assignmentsbutton.gif" width="200" height="50" border="0" alt="one" id="one" /></a>
+			<a href="https://cs.nyu.edu/courses/spring19/CSCI-UA.0061-002/"><img src="mybutton/webdevbutton.gif" width="200" height="50" border="0" alt="one" id="one" /></a>
+			<a href="personal.html"><img src="mybutton/personalbutton.gif" width="200" height="50" border="0" alt="one" id="one" /></a>
+			<a href="resume.html"><img src="mybutton/resumebutton.gif" width="200" height="50" border="0" alt="one" id="one" /></a>
+		</div>
+		<div id = "footer">Footer</div>
+	</div>
+	<div class = "main">
+		<table class = "homeworks">
+			<tr>
+				<th>Assignment topic</th>
+				<th>Date Due</th>
+				<th>Code</th>
+				<th>Demo</th>
+			</tr>
+			<tr>
+				<td>HW#1: Gumball Machine</td>
+				<td>February 6, 2019</td>
+				<td>
+					<textarea rows = "15" cols = "80" readonly = "readonly">
+import java.util.ArrayList;
+
+public class BetterGumball{
+	/*
+	Red = 0
+	Yellow = 1
+	Blue = 2
+	White = 3
+	Green = 4
+	Black = 5
+	Purple = 6
+	Silver = 7
+	Cyan = 8
+	Magenta = 9*/
+	public static int[] colors = new int[10];
+	public static String[] strColors = {"Red", "Yellow", "Blue", "White", "Green", "Black", "Purple", "Silver", "Cyan", "Magenta"};
+	public static void randomize(){
+		colors[0] = 1;
+		colors[1] = (int)(Math.random() * 6 + 10);
+		colors[2] = (int)(Math.random() * 10 + 1);
+		colors[3] = (int)(Math.random() * 10 + 6);
+		colors[4] = (int)(Math.random() * 16 + 10);
+		colors[5] = (int)(Math.random() * 12 + 1);
+		colors[6] = (int)(Math.random() * 6 + 5);
+		colors[7] = (int)(Math.random() * 3 + 4);
+		colors[8] = (int)(Math.random() * 8 + 5);
+		colors[9] = (int)(Math.random() * 11);
+	}
+
+	public static void initial(){
+		for(int i = 0; i < colors.length; i++){
+			System.out.println(colors[i] + " " + strColors[i]);
+		}
+	}
+	public static ArrayList<Integer> gumballs = new ArrayList<Integer>();
+
+	public static void populate(){
+		for(int i = 0; i < colors.length; i++){
+			while(colors[i] > 0){
+				gumballs.add(i);
+				colors[i] --;
+			}
+		}
+	}
+	public static int total = 0;
+	public static int rand = 0;
+	public static int gbSum = 0;
+
+	public static void findRed(){
+		total = gumballs.size();
+		rand = (int)(Math.random() * total);
+		int ball = (int)gumballs.get(rand);
+		while(ball != 0){
+			ball = (int)gumballs.get(rand);
+			System.out.println(strColors[ball]);
+			colors[ball] += 1;
+			gbSum++;
+			gumballs.remove(ball);
+			total --;
+			rand = (int)(Math.random() * total);
+		}
+	}
+
+	public static String findGreatest(){
+		String ret = "";
+		int big = 0;
+		for(int i = 0; i < colors.length; i++){
+			if(colors[i] > big){
+				big = i;
+			}
+		}
+		ret += strColors[big];
+		for(int i = 0; i < colors.length; i++){
+			if(i != big){
+				if(colors[i] == colors[big]){
+					ret += " " + strColors[i];
+				}
+			}
+		}
+		return ret;
+	}
+
+	public static void main(String[] args){
+		int[] colors = new int[10];
+		System.out.println("Welcome to the CIMS Gumball Machine Simulator");
+		randomize();
+		System.out.println("You are starting with the following Gumballs:");
+		initial();
+		populate();
+		System.out.println("Here are your random purchases:");
+		findRed();
+		System.out.println("You purchased " +  gbSum + " Gumballs, for a total of $" + gbSum * .25 + ".");
+		System.out.println("The color(s) purchased most: " + findGreatest());
+	}
+}
+					</textarea>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>HW#2: Age Guesser</td>
+				<td>February 19, 2019</td>
+				<td>
+					<textarea rows = "15" cols = "80" readonly = "readonly">
+<!DOCTYPE html>
+<html>
+<body onload = "outside()">
+	<script>
+		var midpoint;
+		var counter = 0;
+		function outside(){
+			var min = 0;
+			var max = 150;
+			inside(min, max);
+		}
+		function inside(min, max){
+			counter += 1;
+			midpoint = Math.floor((min + max)/2);
+			if(confirm("Is your age " + midpoint + "? Click OK if yes, Cancel if no.")){
+				alert("You are " + midpoint + " years old!");
+				alert("It took " + counter + " tries to guess your age.");
+			}
+			else{
+				if(confirm("Are you younger than " + midpoint +"? Click OK if yes, Cancel if no.")){
+					inside(min, midpoint-1);
+				}
+				else{
+					inside(midpoint+1, max);
+				}
+			}
+		}
+	</script>
+</body>
+</html>
+					</textarea>
+				</td>
+				<td><a href="http://i6.cims.nyu.edu/~tl2378/WebDev/HW2/Hw2.html">Test it out</a></td>
+			<tr>
+				<td>HW#3: This Website!</td>
+				<td>February 28, 2019</td>
+				<td><a href = "">Click here to see HTML, CSS, and Javascript</a></td>
+				<td> Click around the site</td>
+			</tr>
+		</table>
+		<img src = "icons/3.png" width = "80" height = "75" />
+		<div id = "footer"><a href = "https://linkedin.com/in/thomas-lin-933a00141/">Connect with me on LinkedIn!</a></div>
+	</div>
+</body>
+
